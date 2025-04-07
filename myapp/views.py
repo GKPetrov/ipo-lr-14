@@ -1,4 +1,8 @@
 from django.shortcuts import render
 
-def hello_world(request):
-    return render(request, 'index.html')
+def main_page(request):
+    return render(request, 'main.html')
+def about_shop(request):
+    return render(request, 'shop.html')
+def about_author(request):
+    return render(request, 'author.html')
