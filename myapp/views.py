@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import json
+from django.http import JsonResponse
 def main_page(request):
     return render(request, 'main.html')
 def about_shop(request):
@@ -14,11 +15,26 @@ def spec_find(request):
         data = json.load(f)
         for item in data:
             if item['model']=='data.specialty':
-                spec_list.append(item['fields']['title']) 
-    return render(request, 'spec.html', {'spec_list':spec_list})
+                spec_data={
+                    'title':item['fields']['title'] ,
+                    'pk':item['pk']
+                    }
+                spec_list.append(spec_data)
+    return render(request, 'spec.html', {'spec_list':spec_list })
 def spec_info(request):
-    with open('dump.json', 'r', encoding='utf-8') as f:   
+    id = request.GET.get('id')
+    info=''
+    with open('dump.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)
         for item in data:
-        if item['pk'] == id and item['model']=='data.specialty':
-            return f"{item['fields']['code']}>> cпециальность {item['fields']['title']}, {item['fields']['c_type']}"
-        
+            if item['pk'] == int(id) and item['model']=='data.specialty':
+                info= f"{item['fields']['code']}>> cпециальность {item['fields']['title']}, {item['fields']['c_type']}"
+    return render(request, 'spec_info.html' ,{'info' :info})
+def spec_id_info(request, id):
+    info=''
+    with open('dump.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)  
+        for item in data:
+            if item['pk'] == int(id) and item['model']=='data.specialty':
+                info= f"{item['fields']['code']}>> cпециальность {item['fields']['title']}, {item['fields']['c_type']}"
+    return render(request, 'spec_info.html' ,{'info' :info})

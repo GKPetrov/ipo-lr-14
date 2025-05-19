@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>spec_info</title>
 </head>
 <body>
+    <h1 align="center">Информация о специальности</h1>
+    {% if info%}
+    <p>{{info}}</p>
+
+    {% else %}
+        <p>Специальность не найдена</p>
+    {%endif%}
     <a href="http://127.0.0.1:8000/spec">Обратно к списку специальностей</a>
+    
 </body>
 </html>
