@@ -14,6 +14,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
 class Producer(models.Model):
     name = models.CharField(max_length=100, verbose_name ="Название")
     country = models.CharField(max_length=100, verbose_name ="Страна")
@@ -23,6 +24,7 @@ class Producer(models.Model):
         verbose_name_plural = "Производители"
     def __str__(self):
         return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name ="Название")
     desc = models.CharField(max_length=1000, blank=True, verbose_name ="Описание")
@@ -41,10 +43,12 @@ def validate_stock(value):
         return value
     else:
         raise ValidationError("Поле должно быть положительным")
+
 class NewUser(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
 class Cart(models.Model):
     user = models.OneToOneField(NewUser,on_delete=models.CASCADE, verbose_name ="Пользователь")
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name ="Дата создания")
@@ -59,6 +63,7 @@ class Cart(models.Model):
         return total_cost
     def __str__(self):
         return f"Корзина пользователя {user}"
+        
 class CartElem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name ="Корзина")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name ="Продукт")
